@@ -15,17 +15,15 @@ server.on("listening",()=>{
     console.log("socket正在监听中.....");
     server.addMembership(multicastAddr);
     server.setMulticastTTL(128);
-    // setInterval(()=>{
-    //     sendMsg();
-    // },1500)
+    sendMsg();
 })
 
 server.on('message',(msg,rinfo)=>{
     console.log(`msg from client ${rinfo.address}:${rinfo.port}`);
-    console.log(msg);
+    console.log(msg.toString());
 });
 
 function sendMsg(){
     server.send('{"cmd":"whois"}',port,multicastAddr);
 }
-server.bind(32123);
+server.bind(44321);
