@@ -26,6 +26,6 @@ server.on('message',(msg,rinfo)=>{
 });
 
 function sendMsg(){
-    server.send('大家好啊，我是服务端.',port,multicastAddr);
+    server.send('{"cmd":"whois"}',port,multicastAddr);
 }
 server.bind(32123);
