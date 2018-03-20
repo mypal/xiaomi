@@ -29,6 +29,6 @@ function sendMsg(){
 }
 
 function sendMsg2() {
-    server.send('{"cmd" : "get_id_list"}', 9898, 192.168.2.30);
+    server.send('{"cmd" : "get_id_list"}', 9898, '192.168.2.30');
 }
 server.bind(44321);
