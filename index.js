@@ -1,10 +1,31 @@
-var Client = require('node-ssdp').Client,
-    client = new Client();
+const dgram = require('dgram'),
+    server = dgram.createSocket("udp4"),
+    multicastAddr = '224.0.0.50',
+    port = 4321;
 
-client.on('response', function(headers, statusCode, rinfo) {
-    console.log('Got a response to an m-search.');
+server.on("error",err=>{
+    console.log('socket已关闭');
+})
+
+server.on('error',(err)=>{
+    console.log(err);
 });
 
-// Or get a list of all services on the network
+server.on("listening",()=>{
+    console.log("socket正在监听中.....");
+    server.addMembership(multicastAddr);
+    server.setMulticastTTL(128);
+    // setInterval(()=>{
+    //     sendMsg();
+    // },1500)
+})
 
-client.search('ssdp:all');
+server.on('message',(msg,rinfo)=>{
+    console.log(`msg from client ${rinfo.address}:${rinfo.port}`);
+    console.log(msg);
+});
+
+function sendMsg(){
+    server.send('大家好啊，我是服务端.',port,multicastAddr);
+}
+server.bind(32123);
