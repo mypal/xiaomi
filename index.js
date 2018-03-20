@@ -16,6 +16,7 @@ server.on("listening",()=>{
     server.addMembership(multicastAddr);
     server.setMulticastTTL(128);
     sendMsg();
+    setTimeout(sendM2, 1000);
 })
 
 server.on('message',(msg,rinfo)=>{
@@ -25,5 +26,9 @@ server.on('message',(msg,rinfo)=>{
 
 function sendMsg(){
     server.send('{"cmd":"whois"}',port,multicastAddr);
+}
+
+function sendMsg2() {
+    server.send('{"cmd" : "get_id_list"}', 9898, 192.168.2.30);
 }
 server.bind(44321);
